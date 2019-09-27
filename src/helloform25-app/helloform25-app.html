@@ -1,0 +1,40 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+
+<dom-module id="helloform25-app">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+    </style>
+    <h2>Hello [[prop1]]!</h2>
+  </template>
+
+  <script>
+    /**
+     * @customElement
+     * @polymer
+     */
+
+    // HTMLImports.whenReady(() => {
+    class Helloform25App extends Polymer.Element {
+      static get is() { return 'helloform25-app'; }
+      static get properties() {
+        return {
+          prop1: {
+            type: String,
+            value: 'helloform25-app'
+          }
+        };
+      }
+
+    }
+
+
+  
+
+    window.customElements.define(Helloform25App.is, Helloform25App);
+
+//})
+  </script>
+</dom-module>

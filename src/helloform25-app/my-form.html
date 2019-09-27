@@ -1,0 +1,129 @@
+<link rel = 'import' href='../../bower_components/polymer/polymer.html'>
+<link rel = "import" href = "../../bower_components/iron-form/iron-form.html">
+<link rel = "import" href = "../../bower_components/paper-dropdown-menu/paper-dropdown-menu.html">
+<link rel = "import" href = "../../bower_components/paper-menu/paper-menu.html">
+<link rel = "import" href = "../../bower_components/paper-menu/paper-menu-shared-styles.html">
+<link rel = "import" href = "../../bower_components/paper-item/paper-item.html">
+<link rel = "import" href = "../../bower_components/paper-listbox/paper-listbox.html">
+
+<link rel = "import" href = "../../bower_components/paper-dropdown-input/paper-dropdown-input.html">
+<link rel = "import" href = "../../bower_components/paper-button/paper-button.html">
+<link rel = "import" href = "../../bower_components/paper-button/paper-button.html">
+<link rel = "import" href = "../../bower_components/web-animations-js/web-animations.html">
+
+
+
+
+<dom-module id = 'my-form'>
+   <template>
+      <style is = "custom-style">
+  input, paper-input, paper-checkbox, paper-dropdown-input {
+          margin-bottom: 0.1em;
+        }
+
+          paper-button {
+          display: inline-block;
+          width: 45%;
+          text-align: center;
+        }
+          paper-button:not([disabled]) {
+          background: #03a9f4;
+          color: white;
+        }
+        paper-spinner {
+          width: 14px;
+          height: 14px;
+          margin-right: 20px;
+        }
+        paper-spinner[hidden] {
+          display: none;
+        }
+        .output {
+          margin-top: 20px;
+          word-wrap: break-word;
+          font-family: monospace;
+        }
+      </style>
+
+
+	<div class="horizontal layout center form-title" >
+<iron-form id="form1" name="form1">
+    <form  method = "get" action = "/" id = "basic">
+         <paper-input class = "paperinput" name = "name"  id="name" label = "Enter your name"  required auto-validate >
+         </paper-input>
+         <br>
+         <input type = "checkbox" name = "vehicle" value = "bike"> I have a bike
+         <br>
+         <input type = "checkbox" name = "vehicle" value = "car"> I have a car
+         <br>
+         <br>
+         <paper-dropdown-menu label="Type" selected-item-label="{{selected}}">
+          <paper-listbox class="dropdown-content" slot="dropdown-content"  >
+            <paper-item value="0">Type0</paper-item>
+            <paper-item value="1">Type1</paper-item>
+          </paper-listbox>
+         </paper-dropdown-menu>
+         <br>
+         <br>
+         <input type="hidden" name="form_id" value="837299" />
+         <input is="iron-input" name="type" type="hidden" value$="[[selected]]">
+         <!-- <input id="saveForm" class="button_text" type="submit" name="submit" value="Submit" /> -->
+         <paper-button class = "paperbtn" raised  on-click="submitForm" disabled id="form1Submit">Submit</paper-button>
+         <paper-button class = "paperbtn" raised onclick = "_reset(event)">Reset</paper-button>
+
+         <h4>You entered the details:</h4>
+         <div class = "output"></div>
+      </form>
+</iron-form>
+      <script>
+
+         function _reset(event) {
+            var form  =  Polymer.dom(event).localTarget.parentElement
+            console.log(form)
+            form.reset();
+            form.querySelector('.output').innerHTML  =  '';
+         }
+
+      </script>
+
+
+</div>
+
+   </template>
+
+   <script>
+      Polymer ({
+         is: 'my-form',
+
+         ready: function() {
+            this.async(function() {
+            });
+
+            this.$.form1.addEventListener('iron-form-submit', function(event) {
+               this.querySelector('.output').innerHTML = JSON.stringify(event.detail)
+            });
+
+            formt= this.$.form1;
+            form1Submit =this.$.form1Submit;
+
+            this.$.name.addEventListener('change', function(event) {
+              (this.value != "") ? form1Submit.disabled = false : form1Submit.disabled = true;
+            });
+
+        },
+
+
+        submitForm: function() {
+              //  alert(this.$.name.value);
+                if(this.$.name.value != "") // whatever input check
+                   this.$.form1.submit();
+            }
+
+      });
+
+
+
+
+
+   </script>
+</dom-module>
